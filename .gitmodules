@@ -1,0 +1,3 @@
+[submodule "iconv-for-windows"]
+	path = iconv-for-windows
+	url = https://github.com/holy-shit/iconv-for-windows.git

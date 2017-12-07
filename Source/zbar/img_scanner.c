@@ -27,9 +27,14 @@
 #endif
 #include <stdlib.h>     /* malloc, free */
 #include <time.h>       /* clock_gettime */
-#include <sys/time.h>   /* gettimeofday */
 #include <string.h>     /* memcmp, memset, memcpy */
 #include <assert.h>
+
+#ifdef _WIN32
+	#include "../additional_for_win/win-gettimeofday.h"
+#else
+	#include <sys/time.h>   /* gettimeofday */
+#endif
 
 #include <zbar.h>
 #include "error.h"

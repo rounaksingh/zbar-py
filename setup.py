@@ -8,6 +8,7 @@ except ImportError:
     setuptools_opts = {}
 
 import os
+import platform
 import ctypes
 import ctypes.util
 
@@ -31,7 +32,7 @@ Source/zbar/refcnt.c
 Source/zbar/scanner.c
 Source/zbar/symbol.c'''.split('\n')
 
-INCLUDE = 'Source', 'Source/zbar'
+INCLUDE = ['Source', 'Source/zbar']
 
 def has_libc_iconv():
     if os.name != 'posix':
@@ -42,6 +43,19 @@ def has_libc_iconv():
 # don't try to link to standalone iconv library if it's already in libc
 # (iconv is in glibc, but on OS X one needs a stanalone libiconv)
 LIBS = [] if has_libc_iconv() else ['iconv']
+
+LIBS=[]
+LIBS_DIR=[]
+
+# Additional source and header files for windows
+if os.name == 'nt':
+	INCLUDE = INCLUDE + ['Source/additional_for_win', 'iconv-for-windows/include']
+	SRCS = SRCS +['Source/additional_for_win/getopt.c','Source/additional_for_win/win-gettimeofday.c']
+	if platform.architecture()[0] == '32bit':
+		LIBS_DIR = LIBS_DIR + ['iconv-for-windows/lib']
+	elif platform.architecture()[0] == '64bit':
+		LIBS_DIR = LIBS_DIR + ['iconv-for-windows/lib64']
+	LIBS = ['libiconv']
 
 zbar = Extension('zbar._zbar',
     sources=['zbar/_zbar.c'] + SRCS,
@@ -57,7 +71,8 @@ zbar = Extension('zbar._zbar',
         ('ZBAR_VERSION_MAJOR', 0),
         ('ZBAR_VERSION_MINOR', 10),
         ('NO_STATS', None)],
-    libraries=LIBS
+    library_dirs=LIBS_DIR,
+	libraries=LIBS
 )
 
 try:

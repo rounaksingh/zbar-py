@@ -9,14 +9,14 @@ static PyMethodDef NoMethods[] =
 #if PY_MAJOR_VERSION < 3
 
 PyMODINIT_FUNC
-init_freeimage(void)
+init_zbar(void)
 {
     Py_InitModule("_zbar", NoMethods);
 }
 
 #else
 
-static struct PyModuleDef freeimagemodule = {
+static struct PyModuleDef zbarmodule = {
    PyModuleDef_HEAD_INIT,
    "_zbar",
    NULL,
@@ -25,8 +25,8 @@ static struct PyModuleDef freeimagemodule = {
 };
 
 PyMODINIT_FUNC
-PyInit__freeimage(void)
+PyInit__zbar(void)
 {
-    return PyModule_Create(&freeimagemodule);
+    return PyModule_Create(&zbarmodule);
 }
 #endif

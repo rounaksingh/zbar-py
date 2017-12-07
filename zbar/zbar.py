@@ -83,7 +83,7 @@ API = {
     'zbar_symbol_get_quality': (ctypes.c_int, (ctypes.c_void_p,)),
     'zbar_symbol_get_loc_size': (ctypes.c_uint, (ctypes.c_void_p,)),
     'zbar_symbol_get_loc_x': (ctypes.c_int, (ctypes.c_void_p, ctypes.c_uint)),
-    'zbar_symbol_get_loc_y': (ctypes.c_int, (ctypes.c_void_p,ctypes.c_uint)),
+    'zbar_symbol_get_loc_y': (ctypes.c_int, (ctypes.c_void_p,ctypes.c_uint))
     }
 
 def register_api(lib, api):
